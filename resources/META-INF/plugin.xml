@@ -30,5 +30,4 @@
         <!-- Add your actions here -->
         <action id="ExampleAction" class="ExampleAction" text="ExampleAction"/>
     </actions>
-
 </idea-plugin>
