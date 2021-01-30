@@ -1,19 +1,10 @@
 <idea-plugin>
-    <id>com.your.company.unique.plugin.id</id>
+    <id>com.example.id</id>
     <name>Example Plugin</name>
     <version>1.0</version>
     <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
-    <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
-    ]]></description>
-
-    <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
-    ]]>
-    </change-notes>
+    <description>asdfasdf</description>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="173.0"/>
@@ -27,7 +18,10 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
-        <action id="ExampleAction" class="ExampleAction" text="ExampleAction"/>
+        <action id="com.example.ExampleAction" class="com.example.ExampleAction" text="com.example.ExampleAction">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift L"/>
+        </action>
     </actions>
 </idea-plugin>
