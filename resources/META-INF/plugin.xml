@@ -1,10 +1,9 @@
 <idea-plugin>
-    <id>com.example.id</id>
-    <name>Example Plugin</name>
+    <id>com.autotestshortcut</id>
+    <name>AutoTestShortcutPlugin</name>
     <version>1.0</version>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
-    <description>asdfasdf</description>
+    <description><![CDATA[Shortcut to Enable AutoTest. Requires 40 chars]]></description>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="173.0"/>
@@ -18,10 +17,8 @@
     </extensions>
 
     <actions>
-        <action id="com.example.ExampleAction" class="com.example.ExampleAction" text="com.example.ExampleAction">
+        <action id="AutoTestShortcutAction" class="com.AutoTestShortcutAction" text="AutoTestShortcutAction">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift L"/>
         </action>
     </actions>
 </idea-plugin>
