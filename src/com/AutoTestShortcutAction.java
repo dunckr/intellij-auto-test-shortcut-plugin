@@ -18,6 +18,8 @@ import com.intellij.ui.content.ContentManager;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public class AutoTestShortcutAction extends AnAction {
     Logger LOG = Logger.getInstance(AutoTestShortcutAction.class);
@@ -28,27 +30,29 @@ public class AutoTestShortcutAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
-        try {
-            var project = event.getData(PlatformDataKeys.PROJECT);
-            ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
-            ToolWindow window = toolWindowManager.getToolWindow(ToolWindowId.RUN);
-            ContentManager contentManager = window.getContentManager();
+        CompletableFuture.delayedExecutor(2, TimeUnit.SECONDS).execute(() -> {
+            try {
+                var project = event.getData(PlatformDataKeys.PROJECT);
+                ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
+                ToolWindow window = toolWindowManager.getToolWindow(ToolWindowId.RUN);
+                ContentManager contentManager = window.getContentManager();
 
-            // TODO should be able to use the processId rather than loop
-            for (Content content : contentManager.getContents()) {
-                RunContentDescriptor descriptor = content.getUserData(RunContentDescriptor.DESCRIPTOR_KEY);
+                // TODO should be able to use the processId rather than loop
+                for (Content content : contentManager.getContents()) {
+                    RunContentDescriptor descriptor = content.getUserData(RunContentDescriptor.DESCRIPTOR_KEY);
 
-                var isEnabled = AutoTestManager.getInstance(project).isAutoTestEnabled(descriptor);
-                if (isEnabled) {
-                    return;
+                    var isEnabled = AutoTestManager.getInstance(project).isAutoTestEnabled(descriptor);
+                    if (isEnabled) {
+                        return;
+                    }
+                    JComponent component = content.getComponent();
+                    ExecutionEnvironment environment = LangDataKeys.EXECUTION_ENVIRONMENT.getData(DataManager.getInstance().getDataContext(component));
+                    AutoTestManager.getInstance(project).setAutoTestEnabled(descriptor, environment, true);
                 }
-                JComponent component = content.getComponent();
-                ExecutionEnvironment environment = LangDataKeys.EXECUTION_ENVIRONMENT.getData(DataManager.getInstance().getDataContext(component));
-                AutoTestManager.getInstance(project).setAutoTestEnabled(descriptor, environment, true);
+            } catch (Exception error) {
+                LOG.info("Error");
             }
-        } catch (Exception error) {
-            LOG.info("Error");
-        }
+        });
     }
 
     @Override
